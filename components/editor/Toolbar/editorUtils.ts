@@ -10,3 +10,17 @@ export const getLebel = (editor: Editor): string => {
   if (editor.isActive("heading", { level: 3 })) return "Heading 3";
   return "Paragraph";
 };
+
+export const validateUrl = (url: string) => {
+  if (!url.trim()) return "";
+
+  let finalUrl;
+
+  try {
+    finalUrl = new URL(url);
+  } catch (error) {
+    finalUrl = new URL("http://" + url);
+  }
+
+  return finalUrl.origin;
+};

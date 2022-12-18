@@ -21,10 +21,10 @@ import {
 //my components
 import DropdownOptions from "../../common/DropdownOptions";
 import Button from "./Button";
+import InsertLink from "../Link/InsertLink";
+
 import { getFocusedEditor, getLebel } from "./editorUtils";
-import { FC } from "react";
-import { IconType } from "react-icons/lib";
-import { IconBaseProps, IconTree } from "react-icons";
+import { IlinkOption } from "../Link/LinkForm";
 
 interface ToolBarProps {
   editor: Editor;
@@ -49,6 +49,12 @@ const Tolbar: NextPage<ToolBarProps> = ({ editor }) => {
       onClick: () => getFocusedEditor(editor).toggleHeading({ level: 3 }).run(),
     },
   ];
+
+  const handleLinkSubmit = ({ url, openInNewTab }: IlinkOption) => {
+    const { commands } = editor;
+    if (openInNewTab) commands.setLink({ href: url, target: "_blank" });
+    else commands.setLink({ href: url });
+  };
 
   return (
     <div className="flex items-center">
@@ -110,6 +116,8 @@ const Tolbar: NextPage<ToolBarProps> = ({ editor }) => {
         >
           <BsBraces />
         </Button>
+
+        <InsertLink onSubmit={handleLinkSubmit} />
 
         <Button
           active={editor.isActive("orderedList")}

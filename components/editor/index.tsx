@@ -4,6 +4,7 @@ import Tolbar from "./Toolbar/indext";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
 import Placeholder from "@tiptap/extension-placeholder";
+import Link from "@tiptap/extension-link";
 
 interface IEditorProps {}
 
@@ -12,6 +13,14 @@ const Editor: NextPage<IEditorProps> = ({}) => {
     extensions: [
       StarterKit,
       Underline,
+      Link.configure({
+        autolink: false,
+        linkOnPaste: false,
+        openOnClick: false,
+        HTMLAttributes: {
+          target: "",
+        },
+      }),
       Placeholder.configure({
         placeholder: "Type something",
       }),
