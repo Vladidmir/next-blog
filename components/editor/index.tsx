@@ -1,20 +1,20 @@
 import { NextPage, GetStaticProps } from "next";
 import { useEffect, useState } from "react";
-
 import { useEditor, EditorContent, getMarkRange, Range } from "@tiptap/react";
-import Tolbar from "./Toolbar/indext";
+
+import Youtube from "@tiptap/extension-youtube";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
 import Placeholder from "@tiptap/extension-placeholder";
 import Link from "@tiptap/extension-link";
+
+import Tolbar from "./Toolbar/indext";
 import EditLink from "./Link/EditLink";
 
 interface IEditorProps {}
 
 const Editor: NextPage<IEditorProps> = ({}) => {
   const [selectionRange, setSelectionRange] = useState<Range>();
-
-  console.log(selectionRange);
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -25,6 +25,13 @@ const Editor: NextPage<IEditorProps> = ({}) => {
         openOnClick: false,
         HTMLAttributes: {
           target: "",
+        },
+      }),
+      Youtube.configure({
+        width: 840,
+        height: 472.5,
+        HTMLAttributes: {
+          class: "mx-auto rounded",
         },
       }),
       Placeholder.configure({
