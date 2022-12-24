@@ -10,11 +10,13 @@ import Link from "@tiptap/extension-link";
 
 import Tolbar from "./Toolbar/indext";
 import EditLink from "./Link/EditLink";
+import GalleryModal from "./GalleryModal";
 
 interface IEditorProps {}
 
 const Editor: NextPage<IEditorProps> = ({}) => {
   const [selectionRange, setSelectionRange] = useState<Range>();
+  const [showGallery, setShowGallery] = useState(false);
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -62,20 +64,23 @@ const Editor: NextPage<IEditorProps> = ({}) => {
   }, [editor, selectionRange]);
 
   return (
-    <div className="p-3 dark:bg-primary-dark bg-primary transition">
-      {editor && <Tolbar editor={editor} />}
-      {editor ? <EditLink editor={editor} /> : null}
-      <div className="h-[1px] w-full bg-secondary-dark dark:bg-secondary-light my-3" />
+    <>
+      <div className="p-3 dark:bg-primary-dark bg-primary transition">
+        {editor && (
+          <Tolbar onShowGalerry={() => setShowGallery(true)} editor={editor} />
+        )}
+        {editor ? <EditLink editor={editor} /> : null}
+        <div className="h-[1px] w-full bg-secondary-dark dark:bg-secondary-light my-3" />
 
-      <EditorContent editor={editor} />
-    </div>
+        <EditorContent editor={editor} />
+      </div>
+
+      <GalleryModal
+        visible={showGallery}
+        onClose={() => setShowGallery(false)}
+      />
+    </>
   );
-};
-
-export const getStaticProps: GetStaticProps = async (ctx) => {
-  return {
-    props: {},
-  };
 };
 
 export default Editor;

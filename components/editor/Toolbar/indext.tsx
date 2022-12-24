@@ -22,6 +22,7 @@ import {
 import DropdownOptions from "../../common/DropdownOptions";
 import Button from "./Button";
 import InsertLink from "../Link/InsertLink";
+import GalleryModal from "../GalleryModal";
 
 import { getFocusedEditor, getLebel } from "./editorUtils";
 import { IlinkOption } from "../Link/LinkForm";
@@ -29,9 +30,10 @@ import EmbedYoutube from "./EmbedYoutube";
 
 interface ToolBarProps {
   editor: Editor;
+  onShowGalerry?: () => void;
 }
 
-const Tolbar: NextPage<ToolBarProps> = ({ editor }) => {
+const Tolbar: NextPage<ToolBarProps> = ({ editor, onShowGalerry }) => {
   const options = [
     {
       label: "Paragraf0",
@@ -144,7 +146,7 @@ const Tolbar: NextPage<ToolBarProps> = ({ editor }) => {
       <div className="flex items-center space-x-3">
         <EmbedYoutube onSubmit={handleEmbedYoutube} />
 
-        <Button onClick={() => {}}>
+        <Button onClick={onShowGalerry}>
           <BsImageFill />
         </Button>
       </div>
