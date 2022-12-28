@@ -24,7 +24,7 @@ import Button from "./Button";
 import InsertLink from "../Link/InsertLink";
 import GalleryModal from "../GalleryModal";
 
-import { getFocusedEditor, getLebel } from "./editorUtils";
+import { getFocusedEditor, getLebel } from "../editorUtils";
 import { IlinkOption } from "../Link/LinkForm";
 import EmbedYoutube from "./EmbedYoutube";
 

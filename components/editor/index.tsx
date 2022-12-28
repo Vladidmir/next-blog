@@ -7,61 +7,26 @@ import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
 import Placeholder from "@tiptap/extension-placeholder";
 import Link from "@tiptap/extension-link";
+import TipTapImage from "@tiptap/extension-image";
 
 import Tolbar from "./Toolbar/indext";
 import EditLink from "./Link/EditLink";
-import GalleryModal from "./GalleryModal";
-
+import GalleryModal, { ImageSelectionResult } from "./GalleryModal";
+import UseEditor from "./useEditor";
 interface IEditorProps {}
 
 const Editor: NextPage<IEditorProps> = ({}) => {
-  const [selectionRange, setSelectionRange] = useState<Range>();
   const [showGallery, setShowGallery] = useState(false);
-  const editor = useEditor({
-    extensions: [
-      StarterKit,
-      Underline,
-      Link.configure({
-        autolink: false,
-        linkOnPaste: false,
-        openOnClick: false,
-        HTMLAttributes: {
-          target: "",
-        },
-      }),
-      Youtube.configure({
-        width: 840,
-        height: 472.5,
-        HTMLAttributes: {
-          class: "mx-auto rounded",
-        },
-      }),
-      Placeholder.configure({
-        placeholder: "Type something",
-      }),
-    ],
 
-    editorProps: {
-      handleClick(view, pos, event) {
-        const { state } = view;
-        const selectionRange = getMarkRange(
-          state.doc.resolve(pos),
-          state.schema.marks.link
-        );
-        if (selectionRange) setSelectionRange(selectionRange);
-      },
-      attributes: {
-        class:
-          "prose prose-lg focus:outline-none dark:prose-invert max-w-full mx-auto h-full",
-      },
-    },
-  });
+  const { editor } = UseEditor();
 
-  useEffect(() => {
-    if (editor && selectionRange) {
-      editor.commands.setTextSelection(selectionRange);
-    }
-  }, [editor, selectionRange]);
+  const handleImageSelection = (result: ImageSelectionResult) => {
+    editor
+      ?.chain()
+      .focus()
+      .setImage({ src: result.src, alt: result.altText })
+      .run();
+  };
 
   return (
     <>
@@ -78,6 +43,8 @@ const Editor: NextPage<IEditorProps> = ({}) => {
       <GalleryModal
         visible={showGallery}
         onClose={() => setShowGallery(false)}
+        onSelect={handleImageSelection}
+        onFileSelect={() => {}}
       />
     </>
   );

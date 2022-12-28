@@ -1,5 +1,5 @@
 import { ChangeEvent, FC, useEffect, useState, useRef } from "react";
-import { validateUrl } from "../Toolbar/editorUtils";
+import { validateUrl } from "../editorUtils";
 
 interface ILinkFormProps {
   visible: boolean;
