@@ -11,7 +11,7 @@ interface IGalleryProps {
 
 const Gallery: FC<IGalleryProps> = ({
   images,
-  uploading = false,
+  uploading,
   selectedImage = "",
   onSelect,
 }): JSX.Element => {

@@ -8,7 +8,6 @@ import Gallery from "./Gallery";
 import ActionButton from "../../common/ActionButton";
 
 import { IModalProps } from "../../common/MadalContainer";
-import { images } from "../editorUtils";
 
 export interface ImageSelectionResult {
   src: string;
@@ -16,7 +15,9 @@ export interface ImageSelectionResult {
 }
 
 interface IGalleryModalProps extends IModalProps {
+  images: { src: string }[];
   onSelect(result: ImageSelectionResult): void;
+  uploading?: boolean;
   onFileSelect(image: File): void;
 }
 
@@ -25,6 +26,8 @@ const GalleryModal: FC<IGalleryModalProps> = ({
   visible,
   onSelect,
   onFileSelect,
+  images,
+  uploading,
 }): JSX.Element => {
   const [selectedImage, setSelectedImage] = useState("");
   const [altText, setAltText] = useState("");
@@ -57,6 +60,7 @@ const GalleryModal: FC<IGalleryModalProps> = ({
             <Gallery
               images={images}
               selectedImage={selectedImage}
+              uploading={uploading}
               onSelect={(src) => setSelectedImage(src)}
             />
           </div>

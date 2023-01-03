@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import Editor from "../../components/editor";
+import Editor from "../../../components/editor";
 
 interface ICreateProps {}
 

@@ -1,32 +1,40 @@
-import { NextPage, GetStaticProps } from "next";
+import { NextPage } from "next";
 import { useEffect, useState } from "react";
-import { useEditor, EditorContent, getMarkRange, Range } from "@tiptap/react";
-
-import Youtube from "@tiptap/extension-youtube";
-import StarterKit from "@tiptap/starter-kit";
-import Underline from "@tiptap/extension-underline";
-import Placeholder from "@tiptap/extension-placeholder";
-import Link from "@tiptap/extension-link";
-import TipTapImage from "@tiptap/extension-image";
+import { EditorContent } from "@tiptap/react";
 
 import Tolbar from "./Toolbar/indext";
 import EditLink from "./Link/EditLink";
-import GalleryModal, { ImageSelectionResult } from "./GalleryModal";
+import GalleryModal from "./GalleryModal";
 import UseEditor from "./useEditor";
+
+import axios from "axios";
+
 interface IEditorProps {}
 
 const Editor: NextPage<IEditorProps> = ({}) => {
+  const { editor, handleImageSelection } = UseEditor();
   const [showGallery, setShowGallery] = useState(false);
+  const [images, setImages] = useState<{ src: string }[]>([]);
+  const [uploading, setUploading] = useState(false);
 
-  const { editor } = UseEditor();
-
-  const handleImageSelection = (result: ImageSelectionResult) => {
-    editor
-      ?.chain()
-      .focus()
-      .setImage({ src: result.src, alt: result.altText })
-      .run();
+  const fetchImages = async () => {
+    const { data } = await axios("/api/image");
+    setImages(data.images);
   };
+
+  const handleImageUpload = async (image: File) => {
+    setUploading(true);
+    const formData = new FormData();
+    formData.append("image", image);
+    const { data } = await axios.post("/api/image", formData);
+    setUploading(false);
+
+    setImages([data, ...images]);
+  };
+
+  useEffect(() => {
+    fetchImages();
+  }, []);
 
   return (
     <>
@@ -44,7 +52,9 @@ const Editor: NextPage<IEditorProps> = ({}) => {
         visible={showGallery}
         onClose={() => setShowGallery(false)}
         onSelect={handleImageSelection}
-        onFileSelect={() => {}}
+        images={images}
+        onFileSelect={handleImageUpload}
+        uploading={uploading}
       />
     </>
   );

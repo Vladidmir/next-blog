@@ -7,9 +7,18 @@ import Underline from "@tiptap/extension-underline";
 import Placeholder from "@tiptap/extension-placeholder";
 import Link from "@tiptap/extension-link";
 import TipTapImage from "@tiptap/extension-image";
+import { ImageSelectionResult } from "./GalleryModal";
 
 const UseEditor = () => {
   const [selectionRange, setSelectionRange] = useState<Range>();
+
+  const handleImageSelection = (result: ImageSelectionResult) => {
+    editor
+      ?.chain()
+      .focus()
+      .setImage({ src: result.src, alt: result.altText })
+      .run();
+  };
 
   const editor = useEditor({
     extensions: [
@@ -62,6 +71,6 @@ const UseEditor = () => {
     }
   }, [editor, selectionRange]);
 
-  return { editor };
+  return { editor, handleImageSelection };
 };
 export default UseEditor;

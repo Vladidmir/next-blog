@@ -14,15 +14,12 @@ import {
   BsTypeItalic,
   BsTypeUnderline,
   BsImageFill,
-  BsLink45Deg,
-  BsYoutube,
 } from "react-icons/bs";
 
 //my components
 import DropdownOptions from "../../common/DropdownOptions";
 import Button from "./Button";
 import InsertLink from "../Link/InsertLink";
-import GalleryModal from "../GalleryModal";
 
 import { getFocusedEditor, getLebel } from "../editorUtils";
 import { IlinkOption } from "../Link/LinkForm";
