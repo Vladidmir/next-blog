@@ -6,7 +6,11 @@ interface ICreateProps {}
 const Create: NextPage<ICreateProps> = ({}) => {
   return (
     <div className="max-w-4xl m-auto">
-      <Editor />
+      <Editor
+        onSubmit={(post) => {
+          console.log(post);
+        }}
+      />
     </div>
   );
 };

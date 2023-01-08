@@ -30,7 +30,7 @@ interface ToolBarProps {
   onShowGalerry?: () => void;
 }
 
-const Tolbar: NextPage<ToolBarProps> = ({ editor, onShowGalerry }) => {
+const Toolbar: NextPage<ToolBarProps> = ({ editor, onShowGalerry }) => {
   const options = [
     {
       label: "Paragraf0",
@@ -160,4 +160,4 @@ const Head = ({ editor }: { editor: Editor }) => {
   );
 };
 
-export default Tolbar;
+export default Toolbar;
